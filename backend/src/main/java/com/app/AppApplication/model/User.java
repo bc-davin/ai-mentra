@@ -13,7 +13,7 @@ public class User {
     @Column(name = "user_id")
     private Long id;
     @Column(name = "user_mail", nullable = false, unique = true)
-    private String email;
+    private String userEmail;
 
     @Column(name = "profile_picture_url", nullable = false)
     private String profilePictureUrl;

@@ -2,12 +2,14 @@ package com.app.AppApplication.service;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-
+import java.time.Duration;
+import java.net.URL;
+import java.security.SecureRandom;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.app.AppApplication.model.User;
 import com.app.AppApplication.repository.UserRepository;
-import com.app.AppApplication.service.EmailService;
-import com.app.AppApplication.service.S3Service;
+
+
 
 @Service
 public class UserService {
@@ -24,7 +26,7 @@ public class UserService {
     }
 
     public User createUser(User user){
-        if (userRepository.existsByUserMail(user.getEmail())){
+        if (userRepository.existsByUserMail(user.getUserEmail())){
             throw new RuntimeException("User already exists");
         }
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
@@ -54,4 +56,25 @@ public class UserService {
     public void deleteUser(Long id){
         userRepository.deleteById(id);
     }
+    public void resetPassword(User user){
+        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder(10);
+        for (int i = 0; i < 10; i++) {
+            sb.append(chars.charAt(random.nextInt(chars.length())));
+        }
+        String tempPassword = sb.toString();
+        user.setUserPassword(passwordEncoder.encode(tempPassword));
+        userRepository.save(user);
+
+        emailService.sendPassWordResetEmail(user.getUserName(), user.getUserEmail(), tempPassword);
+    }
+    public URL getProfilePictureUploadUrl(User user, String fileName,String contentType){
+        String s3Key = "uploads/profile-pictures/" + fileName;
+        user.setProfilePictureUrl(s3Key);
+        userRepository.save(user);
+        //return s3Service.gen
+        return s3Service.generateUploadUrl(s3Key, contentType, Duration.ofHours(3));
+    }
+
 }
