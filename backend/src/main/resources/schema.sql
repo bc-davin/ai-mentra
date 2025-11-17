@@ -13,25 +13,27 @@ CREATE TABLE users (
     r_datetime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE classes(
-    class_id SERIAL PRIMARY KEY,
-    user_id INTEGER NOT NULL DEFAULT 0,
-    class_name VARCHAR(64) NOT NULL DEFAULT '',
-    teacher_name VARCHAR(64) NOT NULL DEFAULT '',
-    grade VARCHAR(32) DEFAULT '',
-    class_subject VARCHAR(64) DEFAULT '',
-    class_period VARCHAR(32) DEFAULT '',
-    class_language VARCHAR(32) DEFAULT '',
-    video_filename VARCHAR(255) NOT NULL DEFAULT '',
-    start_datetime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    finish_datetime DATE NOT NULL DEFAULT CURRENT_DATE,
-    m_datetime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    r_datetime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    is_removed BOOLEAN NOT NULL DEFAULT FALSE,
+CREATE TABLE classes (
+  class_id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL DEFAULT 0,
+  class_name VARCHAR(64) NOT NULL DEFAULT '',
+  teacher_name VARCHAR(64) NOT NULL DEFAULT '',
+  grade VARCHAR(32) DEFAULT '',
+  class_subject VARCHAR(64) DEFAULT '',
+  class_period VARCHAR(32) DEFAULT '',
+  class_language VARCHAR(32) DEFAULT '',
+  video_filename VARCHAR(255) NOT NULL DEFAULT '',
+  start_datetime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  finish_datetime DATE NOT NULL DEFAULT CURRENT_DATE,
+  m_datetime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  r_datetime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  is_removed BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-CREATE TABLE categories(
-    category_id SERIAL PRIMARY KEY,
-    category_name VARCHAR(64) NOT NULL DEFAULT '',
-    category_description VARCHAR(255) NOT NULL DEFAULT '',
+
+CREATE TABLE categories (
+  category_id SERIAL PRIMARY KEY,
+  category_name VARCHAR(64) NOT NULL DEFAULT '',
+  category_description VARCHAR(255) NOT NULL DEFAULT ''
 );
+
